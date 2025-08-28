@@ -368,9 +368,6 @@ JOptionPane.showMessageDialog(null, "Fim de Programa","Adeus de Programa",JOptio
 👉 Em resumo:
 O programa **cadastra personagens de Dragon Ball Super**, salvando seus atributos em arquivos de texto, e também permite **procurar personagens salvos**, exibindo seus dados ao usuário via janelas gráficas.
 
-Boa! 👌 Mostrar um **exemplo prático** vai deixar sua apresentação bem didática.
-Vou montar um fluxo de execução simulando o cadastro e leitura de um personagem (ex.: **Goku**).
-
 ---
 
 # 📌 Exemplo de Execução do Programa
