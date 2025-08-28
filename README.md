@@ -368,4 +368,117 @@ JOptionPane.showMessageDialog(null, "Fim de Programa","Adeus de Programa",JOptio
 👉 Em resumo:
 O programa **cadastra personagens de Dragon Ball Super**, salvando seus atributos em arquivos de texto, e também permite **procurar personagens salvos**, exibindo seus dados ao usuário via janelas gráficas.
 
+Boa! 👌 Mostrar um **exemplo prático** vai deixar sua apresentação bem didática.
+Vou montar um fluxo de execução simulando o cadastro e leitura de um personagem (ex.: **Goku**).
+
+---
+
+# 📌 Exemplo de Execução do Programa
+
+### 1. **Usuário escolhe a opção 1 – Cadastrar Personagem**
+
+O programa pede as informações:
+
+```
+Digite o caminho da pasta onde será salvo as informações do personagem: C:/dbz
+Digite o nome do personagem: Goku
+Digite quantos pontos de KI esse personagem possui: 9000
+Digite a quantos pontos de Técnica que esse personagem possui: 85
+Digite a quantos pontos de velocidade que esse personagem possui: 95
+Digite a quantidade de transformações que esse personagem faz: 3
+```
+
+👉 Internamente:
+
+```java
+personagem.setNome("Goku");
+personagem.setKi(9000);
+personagem.setTecnica(85);
+personagem.setVelocidade(95);
+personagem.setTransformacao(3);
+personagem.gravar("C:/dbz");
+```
+
+---
+
+### 2. **Arquivo gerado**
+
+Caminho: `C:/dbz/goku.txt`
+
+Conteúdo do arquivo:
+
+```
+Goku
+9000
+85
+95
+3
+```
+
+Mensagem exibida:
+
+```
+Arquivo gravado com sucesso
+```
+
+---
+
+### 3. **Usuário escolhe a opção 2 – Procurar Personagem**
+
+O programa pede:
+
+```
+Digite o caminho da pasta onde foi salvo o arquivo do personagem: C:/dbz
+Digite o nome do personagem: Goku
+```
+
+👉 Internamente:
+
+```java
+personagem.setNome("Goku");
+personagem = personagem.ler("C:/dbz");
+```
+
+---
+
+### 4. **Arquivo lido**
+
+O programa abre `C:/dbz/goku.txt` e preenche os atributos do objeto `personagem`.
+
+---
+
+### 5. **Saída exibida ao usuário**
+
+```
+Informações do Arquivo
+Caminho: C:/dbz
+Arquivo: goku.txt
+
+Informações do Personagem
+Nome: Goku
+Pontos de KI: 9000
+Pontos de Técnica: 85
+Velocidade: 95
+Transformações: 3
+```
+
+---
+
+# 📌 Explicação 
+
+1. O **usuário insere dados** → são armazenados em atributos do objeto `DragonBallSuper` por meio dos **setters**.
+2. O método `gravar(path)` cria um **arquivo .txt** com esses dados.
+3. Quando o usuário escolhe procurar, o método `ler(path)` abre o arquivo e usa os **getters** para exibir os dados.
+4. O programa usa **interface gráfica simples (`JOptionPane`)** para interação e **persistência em arquivos texto** para salvar os personagens.
+
+---
+
+👉 Isso mostra **ciclo completo**:
+
+* **Instância criada** → `new DragonBallSuper()`.
+* **Atributos preenchidos** → via setters.
+* **Dados persistidos** → com `gravar()`.
+* **Dados recuperados** → com `ler()`.
+* **Dados exibidos** → via getters.
+
 
