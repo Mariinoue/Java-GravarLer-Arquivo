@@ -1,4 +1,199 @@
+# 📌 Explicação do Código – Interface + JavaBean
 
+---
+
+## 1. **Interface `IDBSuper`**
+
+```java
+public interface IDBSuper {
+    public DragonBallSuper ler (String path) throws IOException;
+    public String gravar (String path);
+}
+```
+
+### ✨ O que faz:
+
+* É uma **interface** que define **assinaturas de métodos** (sem implementação).
+* Métodos obrigatórios para qualquer classe que a **implemente**:
+
+  * `ler(String path)` → lê um personagem de um arquivo (pode lançar `IOException`).
+  * `gravar(String path)` → grava os atributos em arquivo.
+
+👉 **Função da interface**: garantir que qualquer classe que represente personagens de DB Super tenha a **capacidade de salvar e ler em arquivos**.
+
+---
+
+## 2. **Classe `DragonBallSuper`**
+
+```java
+public class DragonBallSuper implements IDBSuper {
+```
+
+* É um **JavaBean**, ou seja, uma classe que representa um **objeto com atributos privados** e **métodos getters e setters**.
+* Implementa a interface `IDBSuper`, então é obrigada a implementar os métodos `ler` e `gravar`.
+
+---
+
+### 🔑 Atributos (encapsulados)
+
+```java
+private String nome;
+private int ki;
+private int tecnica;
+private int velocidade;
+private int transformacao;
+```
+
+* **Privados (`private`)** → só podem ser acessados indiretamente, através de métodos.
+* Representam as características de um personagem.
+
+---
+
+### 🔧 Construtor
+
+```java
+public DragonBallSuper() { }
+```
+
+* Construtor **vazio** → permite criar um objeto sem definir valores iniciais.
+
+---
+
+### 📥 Getters e Setters
+
+Exemplo:
+
+```java
+public String getNome() { return nome; }
+public void setNome(String nome) { this.nome = nome; }
+```
+
+* **Getters**: retornam o valor de um atributo (`getNome`, `getKi`, etc.).
+* **Setters**: alteram o valor de um atributo (`setNome`, `setKi`, etc.).
+* Isso garante o **encapsulamento** (controle sobre como os atributos são acessados e modificados).
+
+---
+
+### 📂 Método `ler`
+
+```java
+public DragonBallSuper ler(String path) throws IOException {
+    String nomeArquivo = nome.replaceAll(" ", "_").toLowerCase();
+    BufferedReader br = new BufferedReader(
+            new FileReader(path + "/" + nomeArquivo + ".txt"));
+
+    nome = br.readLine();
+    ki = Integer.parseInt(br.readLine());
+    tecnica = Integer.parseInt(br.readLine());
+    velocidade = Integer.parseInt(br.readLine());
+    transformacao = Integer.parseInt(br.readLine());
+    br.close();
+
+    return this;
+}
+```
+
+* **Função:** Lê os atributos de um personagem armazenados em um arquivo `.txt`.
+* Usa `BufferedReader` para ler linha por linha.
+* Preenche os atributos (`nome`, `ki`, etc.) com os valores do arquivo.
+* Retorna o próprio objeto (`this`) já preenchido.
+
+---
+
+### 💾 Método `gravar`
+
+```java
+public String gravar(String path) {
+    try {
+        File dir = new File(path);
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+        String nomeArquivo = nome.replaceAll(" ", "_").toLowerCase();
+        PrintWriter pw = new PrintWriter(path + "/" + nomeArquivo + ".txt");
+        pw.println(nome);
+        pw.println(ki);
+        pw.println(tecnica);
+        pw.println(velocidade);
+        pw.println(transformacao);
+
+        pw.flush();
+        pw.close();
+        return "Arquivo gravado com sucesso";
+    } catch (IOException e) {
+        return "Falha ao gravar arquivo: " + e.getMessage();
+    }
+}
+```
+
+* **Função:** Cria um arquivo `.txt` e grava os atributos do personagem.
+* Se a pasta não existir, cria automaticamente (`dir.mkdir()`).
+* O nome do arquivo é gerado a partir do nome do personagem (`replaceAll(" ", "_").toLowerCase()`).
+* Retorna uma **mensagem de sucesso** ou **erro**.
+
+---
+
+# 📌 Estrutura Conceitual
+
+### **Classe: `DragonBallSuper`**
+
+* **Atributos privados:** `nome`, `ki`, `tecnica`, `velocidade`, `transformacao`.
+* **Construtor:** padrão (sem parâmetros).
+* **Getters e Setters:** permitem acessar e modificar atributos.
+* **Métodos de persistência:**
+
+  * `gravar(String path)` → grava dados em arquivo.
+  * `ler(String path)` → lê dados do arquivo.
+
+### **Interface: `IDBSuper`**
+
+* Define a assinatura de `ler` e `gravar`.
+* Garante que qualquer classe que implemente terá esses métodos.
+
+---
+
+# 📌 Diagrama UML Simplificado
+
+```plaintext
+           <<interface>>
+             IDBSuper
+      +--------------------------+
+      | + ler(path: String): DragonBallSuper |
+      | + gravar(path: String): String       |
+      +--------------------------+
+
+                 ▲ implements
+                 |
+        +-------------------------+
+        |     DragonBallSuper     |
+        +-------------------------+
+        | - nome: String          |
+        | - ki: int               |
+        | - tecnica: int          |
+        | - velocidade: int       |
+        | - transformacao: int    |
+        +-------------------------+
+        | + getNome(): String     |
+        | + setNome(String): void |
+        | + getKi(): int          |
+        | + setKi(int): void      |
+        | + getTecnica(): int     |
+        | + setTecnica(int): void |
+        | + getVelocidade(): int  |
+        | + setVelocidade(int): void |
+        | + getTransformacao(): int |
+        | + setTransformacao(int): void |
+        | + ler(path: String): DragonBallSuper |
+        | + gravar(path: String): String       |
+        +-------------------------+
+```
+
+---
+
+👉 Em resumo para sua apresentação:
+
+* **`IDBSuper`** é uma **interface** → define o contrato (quem implementar precisa ter `ler` e `gravar`).
+* **`DragonBallSuper`** é um **JavaBean** → contém **atributos privados + getters/setters**, e **implementa os métodos da interface** para salvar e ler arquivos.
 
 ---
 
